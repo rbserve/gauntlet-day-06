@@ -1,0 +1,37 @@
+# The binary this exercise builds
+NAME := visit
+
+# Compiler and the gauntlet's mandatory flags
+CXX      := c++
+CXXFLAGS := -Wall -Wextra -Werror -std=c++17
+
+# List every .cpp file in the exercise here
+SRCS := $(shell find . -name "*.cpp")
+OBJS := $(SRCS:.cpp=.o)
+
+run: all
+	./$(NAME)
+	valgrind --leak-check=full ./$(NAME)
+
+# `make` / `make all`: build the binary
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
+
+# Compile each .cpp into a .o
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# `make clean`: remove object files
+clean:
+	rm -f $(OBJS)
+
+# `make fclean`: remove objects AND the binary
+fclean: clean
+	rm -f $(NAME)
+
+# `make re`: rebuild everything from scratch
+re: fclean all
+
+.PHONY: all clean fclean re
