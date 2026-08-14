@@ -1,5 +1,5 @@
 # The binary this exercise builds
-NAME := visit
+NAME := grid
 
 # Compiler and the gauntlet's mandatory flags
 CXX      := c++
